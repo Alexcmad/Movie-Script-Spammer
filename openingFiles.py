@@ -13,10 +13,11 @@ starting = False
 cLine = 0
 countDown = 5
 secondsBetween = 1
+written = 0
 
 
 def openFile():
-    global running, starting
+    global running, starting, written
     running = True
     starting = True
     global filename
@@ -26,11 +27,11 @@ def openFile():
         print(filename)
         startLine['state'] = tk.NORMAL
         btn_start['state'] = tk.NORMAL
+        written = 0
 
 
 def copyPasta():
-    global file, running, starting, cLine,countDown
-
+    global file, running, starting, cLine, countDown, written
 
     btn_start['state'] = tk.DISABLED
     startLine["state"] = tk.DISABLED
@@ -59,15 +60,16 @@ def copyPasta():
                 lbl_Line['text'] = line[cLine]
                 print(line[cLine], end='')
                 pg.write(line[cLine])
-                for j in range(10*secondsBetween):
+                written += 1
+                for j in range(10 * secondsBetween):
                     window.update()
                     time.sleep(.1)
             cLine += 1
             copyPasta()
         else:
             running = False
-            lbl_Line['text'] = f"Finished all {cLine} Lines"
-            lbl_currentLine['text'] = "Current Line: EOF"
+            lbl_Line['text'] = f"Finished all {cLine} Lines\nTotal lines written: {written}"
+            lbl_currentLine['text'] = "Current Line: END"
             cLine = 0
             btn_stop['state'] = tk.DISABLED
 
