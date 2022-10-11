@@ -6,6 +6,8 @@ import pyautogui as pg
 window = tk.Tk()
 fr_main = tk.Frame(window)
 fr_main.pack()
+fr_settings = tk.Frame(fr_main)
+fr_settings.grid(row=2,column=0,columnspan=3)
 filename = ''
 running = True
 starting = False
@@ -117,10 +119,19 @@ lbl_Line.grid(column=1, row=1, columnspan=2, sticky='nsew')
 btn_stop = tk.Button(fr_main, text='Stop', command=stop, state=tk.DISABLED)
 btn_stop.grid(row=3, column=2, sticky='nsew')
 
-startLine = tk.Text(fr_main, width=4, height=1, borderwidth=2, relief=tk.SUNKEN)
-startLine.grid(row=2, column=1, sticky='w')
+startLine = tk.Entry(fr_settings, width=4, borderwidth=2, relief=tk.SUNKEN)
+startLine.grid(row=0, column=1, sticky='nsw')
 
-lbl_startLine = tk.Label(fr_main, text="Start Line:", anchor='e')
-lbl_startLine.grid(row=2, column=0, sticky='nsew')
+lbl_startLine = tk.Label(fr_settings, text="Start Line:", anchor='w')
+lbl_startLine.grid(row=0, column=0, sticky='nsew')
+
+lbl_countDown = tk.Label(fr_settings, text="Countdown length:", anchor='e')
+lbl_countDown.grid(row=1,column=0)
+
+radio2 = tk.Radiobutton()
+radio5 = tk.Radiobutton()
+radio10 = tk.Radiobutton()
+
+
 
 window.mainloop()
