@@ -4,7 +4,7 @@ import time
 import pyautogui as pg
 
 window = tk.Tk()
-window.resizable (False, False)
+window.resizable(False, False)
 window.title('Script Spammer 9000')
 window.iconbitmap('icon.ico')
 fr_main = tk.Frame(window)
@@ -41,7 +41,14 @@ def openFile():
     global filename
     filename = askopenfilename()  # show an "Open" dialog box and return the path to the selected file
     if filename:
-        btn_chooseFile["text"] = filename
+
+        displayName = ''
+        for i in filename:
+            displayName += i
+            if i == '/':
+                displayName = ''
+
+        btn_chooseFile["text"] = displayName
         print(filename)
         startLine['state'] = tk.NORMAL
         btn_start['state'] = tk.NORMAL
