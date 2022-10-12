@@ -6,7 +6,7 @@ import pyautogui as pg
 window = tk.Tk()
 window.resizable(False, False)
 window.title('Script Spammer 9000')
-window.iconbitmap('icon.ico')
+#window.iconbitmap('icon.ico')
 fr_main = tk.Frame(window)
 fr_main.pack()
 fr_settings = tk.Frame(fr_main)
@@ -24,8 +24,9 @@ written = 0
 v_countDown = tk.IntVar()
 
 
-def callback(inserted):
-    print(inserted)
+def callback(inserted, content):
+    if content == '':
+        print("Empty")
     return inserted.isnumeric()
 
 
@@ -51,6 +52,7 @@ def openFile():
         btn_chooseFile["text"] = displayName
         print(filename)
         startLine['state'] = tk.NORMAL
+        startLine.insert(tk.END, '0')
         btn_start['state'] = tk.NORMAL
         written = 0
 
@@ -58,7 +60,6 @@ def openFile():
 def copyPasta():
     global file, running, starting, cLine, countDown, written
 
-    startLine["state"] = tk.DISABLED
     btn_start['state'] = tk.DISABLED
     startLine["state"] = tk.DISABLED
     startLine.insert(tk.END, str(cLine))
@@ -66,8 +67,9 @@ def copyPasta():
 
     if running and filename:
         if starting:
-            print(startLine.get())
-            cLine = int(startLine.get())
+            if startLine.get():
+                print(startLine.get())
+                cLine = int(startLine.get())
             starting = False
             while countDown >= 0:
                 lbl_Line['text'] = "Starting in: " + str(countDown)
@@ -108,7 +110,6 @@ def stop():
     if not btn_stop['state'] == tk.DISABLED:
         if running:
             btn_stop["text"] = "Reset"
-            btn_start["text"] = 'Resume'
             running = False
             cLine = 0
 
@@ -147,8 +148,8 @@ btn_stop = tk.Button(fr_main, text='Stop', command=stop, state=tk.DISABLED)
 btn_stop.grid(row=3, column=2, sticky='nsew')
 
 okayCommand = window.register(callback)
-startLine = tk.Entry(fr_settings, borderwidth=2, relief=tk.SUNKEN, width=6, validate='key',
-                     validatecommand=(okayCommand, '%S'))
+startLine = tk.Entry(fr_settings, borderwidth=2, relief=tk.SUNKEN, width=6, validate='all',
+                     validatecommand=(okayCommand, '%S', '%P'))
 startLine.grid(row=0, column=1, sticky='nsew')
 
 lbl_startLine = tk.Label(fr_settings, text="Start Line:", anchor=tk.E)
